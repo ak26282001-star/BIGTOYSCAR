@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Big Toys Customs — Bespoke Automotive Builds</title>
+  <meta name="description" content="Big Toys Customs designs and builds one-off cars: paint, wraps, wheels and stance, performance, lighting and interiors, engineered as a single idea. Spec your build and request a quote.">
+  <meta name="theme-color" content="#08080a">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Big Toys Customs">
+  <meta property="og:title" content="Big Toys Customs — Bespoke Automotive Builds">
+  <meta property="og:description" content="One-off custom cars. Paint, stance, power and interiors, engineered as a single idea.">
+  <!-- Social crawlers need an absolute URL: replace with https://YOUR-DOMAIN/assets/img/og-image.jpg before launch -->
+  <meta property="og:image" content="assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..900&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoBodyShop",
+    "name": "Big Toys Customs",
+    "description": "Bespoke automotive builds: paint and wraps, wheels and stance, performance, lighting and interiors."
+  }
+  </script>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============ SVG sprite: the car + wheel artwork, re-coloured with CSS custom properties ============ -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="bodyShade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity=".28"/>
+        <stop offset=".22" stop-color="#fff" stop-opacity=".06"/>
+        <stop offset=".5" stop-color="#000" stop-opacity="0"/>
+        <stop offset=".78" stop-color="#000" stop-opacity=".45"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".8"/>
+      </linearGradient>
+      <linearGradient id="bodyFalloff" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#000" stop-opacity=".35"/>
+        <stop offset=".35" stop-color="#000" stop-opacity="0"/>
+        <stop offset=".7" stop-color="#000" stop-opacity="0"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".5"/>
+      </linearGradient>
+      <linearGradient id="sweep" x1="-1" y1="0" x2="0" y2="0" gradientUnits="objectBoundingBox">
+        <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+        <stop offset=".5" stop-color="#fff" stop-opacity=".22"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        <animate attributeName="x1" values="-1;1.4" dur="7s" repeatCount="indefinite"/>
+        <animate attributeName="x2" values="0;2.4" dur="7s" repeatCount="indefinite"/>
+      </linearGradient>
+      <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#3a3d44"/>
+        <stop offset=".45" stop-color="#0d0e11"/>
+        <stop offset="1" stop-color="#050506"/>
+      </linearGradient>
+      <radialGradient id="tyre" r=".5">
+        <stop offset=".72" stop-color="#151517"/>
+        <stop offset="1" stop-color="#050505"/>
+      </radialGradient>
+
+      <path id="spoke" d="M-4.5 -10 L-8.5 -44 L8.5 -44 L4.5 -10 Z"/>
+      <path id="blade" d="M0 -12 C 8 -22, 10 -34, 4 -44 L -4 -44 C 2 -34, 0 -22, -6 -12 Z"/>
+
+      <g id="wheel">
+        <circle r="62" fill="url(#tyre)"/>
+        <circle r="58" fill="none" stroke="#202023" stroke-width="2"/>
+        <circle r="47" style="fill: var(--rim-face, #121214)"/>
+        <path d="M-34 -24 A42 42 0 0 1 14 -40 L11 -30 A32 32 0 0 0 -25 -18 Z" style="fill: var(--caliper, #c8a46a)"/>
+        <g style="opacity: var(--w-spoke, 1); fill: var(--rim, #8b8f96)">
+          <use href="#spoke"/><use href="#spoke" transform="rotate(72)"/><use href="#spoke" transform="rotate(144)"/><use href="#spoke" transform="rotate(216)"/><use href="#spoke" transform="rotate(288)"/>
+        </g>
+        <g style="opacity: var(--w-mesh, 0); stroke: var(--rim, #8b8f96)" fill="none" stroke-width="2.2">
+          <circle r="22"/><circle r="34"/>
+          <path d="M0-44V-10M0 44V10M-44 0H-10M44 0H10M-31-31L-7-7M31 31L7 7M-31 31L-7 7M31-31L7-7"/>
+          <path d="M-17-41L-4-10M17 41L4 10M-41 17L-10 4M41-17L10-4M17-41L4-10M-17 41L-4 10M-41-17L-10-4M41 17L10 4" stroke-width="1.4"/>
+        </g>
+        <g style="opacity: var(--w-fan, 0); fill: var(--rim, #8b8f96)">
+          <use href="#blade"/><use href="#blade" transform="rotate(30)"/><use href="#blade" transform="rotate(60)"/><use href="#blade" transform="rotate(90)"/><use href="#blade" transform="rotate(120)"/><use href="#blade" transform="rotate(150)"/><use href="#blade" transform="rotate(180)"/><use href="#blade" transform="rotate(210)"/><use href="#blade" transform="rotate(240)"/><use href="#blade" transform="rotate(270)"/><use href="#blade" transform="rotate(300)"/><use href="#blade" transform="rotate(330)"/>
+        </g>
+        <circle r="47" fill="none" style="stroke: var(--rim, #8b8f96)" stroke-width="2.5"/>
+        <circle r="12" style="fill: var(--rim, #8b8f96)"/>
+        <circle r="4.5" fill="#050505"/>
+      </g>
+
+      <!-- body silhouette, shared by paint, shading and light-sweep layers -->
+      <path id="body" d="M70 284 C62 262 62 230 80 214 L210 196 C300 186 360 176 400 168 C450 130 500 104 560 98 C620 94 680 98 720 112 C790 138 860 160 915 178 C935 184 945 196 942 214 L936 284 C934 294 926 300 914 300 L838.5 300 A74 74 0 1 0 701.5 300 L298.5 300 A74 74 0 1 0 161.5 300 L96 300 C82 300 72 292 70 284 Z"/>
+
+      <symbol id="car" viewBox="0 0 1000 360">
+        <g style="transform: translateY(var(--drop, 0px)); transition: transform .6s cubic-bezier(.2,.7,.2,1)">
+          <use href="#body" style="fill: var(--paint, #16171a)"/>
+          <use href="#body" fill="url(#bodyShade)"/>
+          <use href="#body" fill="url(#bodyFalloff)"/>
+          <use href="#body" fill="url(#sweep)" style="opacity: var(--sweep, 0)"/>
+          <!-- glasshouse -->
+          <path d="M422 166 C466 132 508 112 562 106 C616 101 664 106 704 120 C724 128 732 140 724 150 L432 172 Z" fill="url(#glass)"/>
+          <path d="M600 104 L592 160" stroke="#000" stroke-width="5" opacity=".7"/>
+          <path d="M430 168 C520 150 640 146 724 150" stroke="#fff" stroke-opacity=".14" fill="none"/>
+          <!-- character lines -->
+          <path d="M110 226 C360 204 640 186 935 192" stroke="#fff" stroke-opacity=".32" stroke-width="1.4" fill="none"/>
+          <path d="M182 262 C400 252 600 250 836 256" stroke="#fff" stroke-opacity=".1" stroke-width="1.2" fill="none"/>
+          <path d="M478 172 C476 212 480 252 488 298" stroke="#000" stroke-opacity=".55" stroke-width="1.6" fill="none"/>
+          <path d="M688 150 C700 196 702 250 700 296" stroke="#000" stroke-opacity=".45" stroke-width="1.4" fill="none"/>
+          <path d="M436 170 l28 -10 l7 11 l-30 5 z" style="fill: var(--paint, #16171a)" stroke="#000" stroke-opacity=".5"/>
+          <path d="M300 290 L700 290 L692 300 L308 300 Z" fill="#000" opacity=".55"/>
+          <!-- aero package -->
+          <g style="opacity: var(--aero, 0); transition: opacity .5s">
+            <path d="M872 166 L944 174 L946 182 L872 175 Z" fill="#0a0a0b"/>
+            <path d="M890 172 L896 160 L904 162 L900 174 Z" fill="#0a0a0b"/>
+            <path d="M66 290 L150 296 L148 304 L70 300 Z" fill="#0a0a0b"/>
+            <path d="M300 300 L700 300 L696 306 L304 306 Z" fill="#0a0a0b"/>
+          </g>
+          <!-- lamps -->
+          <path d="M82 216 L156 204 C161 206 159 212 152 214 L86 226 Z" style="fill: var(--lamp, #f4efe6)"/>
+          <path d="M914 180 L943 194 L944 204 L912 192 Z" fill="#ff2b22"/>
+          <path d="M914 180 L943 194 L944 204 L912 192 Z" fill="#ff2b22" filter="blur(3px)" opacity=".8"/>
+        </g>
+        <use href="#wheel" transform="translate(230 272)"/>
+        <use href="#wheel" transform="translate(770 272)"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ================================= HEADER ================================= -->
+  <header class="site-header" data-header>
+    <div class="site-header__inner">
+      <a class="wordmark" href="#top" aria-label="Big Toys Customs, home">
+        <span class="wordmark__big">Big Toys</span>
+        <span class="wordmark__rule" aria-hidden="true"></span>
+        <span class="wordmark__sub">Customs</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
+          <span class="nav__toggle-label">Menu</span>
+          <span class="nav__toggle-bars" aria-hidden="true"><span></span><span></span></span>
+        </button>
+        <ul class="nav__menu" id="nav-menu" data-nav-menu>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#configurator">Spec a build</a></li>
+          <li><a href="#work">Featured build</a></li>
+          <li><a href="#process">Process</a></li>
+          <li class="nav__cta"><a class="btn btn--ghost" href="#quote">Request a quote</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================================= HERO ================================= -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__stage" aria-hidden="true">
+        <div class="hero__softbox"></div>
+        <div class="hero__haze hero__haze--a"></div>
+        <div class="hero__haze hero__haze--b"></div>
+        <div class="hero__floor"></div>
+        <div class="hero__car" data-parallax>
+          <div class="hero__beam"></div>
+          <svg class="car car--hero" viewBox="0 0 1000 360"><use href="#car"/></svg>
+          <svg class="car car--reflection" viewBox="0 0 1000 360"><use href="#car"/></svg>
+          <div class="hero__contact-shadow"></div>
+        </div>
+      </div>
+
+      <div class="hero__content container">
+        <p class="eyebrow reveal">Bespoke automotive builds</p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="line"><span>Not modified.</span></span>
+          <span class="line line--accent"><span>Authored.</span></span>
+        </h1>
+        <p class="hero__lede reveal" style="--d: .5s">
+          Paint, stance, power and interior, conceived as one idea and built by hand. Every car that leaves the studio exists once.
+        </p>
+        <div class="hero__actions reveal" style="--d: .65s">
+          <a class="btn btn--primary" href="#configurator">Spec your build <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--text" href="#work">See the featured build</a>
+        </div>
+      </div>
+
+      <div class="hero__meta container" aria-hidden="true">
+        <span class="mono">Project “Nightfall”</span>
+        <span class="mono hero__meta-mid">Satin obsidian · Bronze forged · Lowered 35 mm</span>
+        <span class="mono hero__scroll">Scroll <i></i></span>
+      </div>
+    </section>
+
+    <!-- ================================= DISCIPLINES MARQUEE ================================= -->
+    <div class="marquee" aria-label="Disciplines">
+      <div class="marquee__track">
+        <ul class="marquee__list">
+          <li>Paint &amp; Wrap</li><li>Wheels &amp; Stance</li><li>Performance</li><li>Interiors</li><li>Lighting</li><li>Ceramic Protection</li>
+        </ul>
+        <ul class="marquee__list" aria-hidden="true">
+          <li>Paint &amp; Wrap</li><li>Wheels &amp; Stance</li><li>Performance</li><li>Interiors</li><li>Lighting</li><li>Ceramic Protection</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ================================= STATEMENT ================================= -->
+    <section class="statement container" aria-label="Studio philosophy">
+      <p class="mono statement__label reveal">( The studio )</p>
+      <p class="statement__text" data-words>
+        We don’t sell parts lists. We sit down with you, find the one idea the car should express, and then make every decision answer to it: the depth of the paint, the gap between tyre and arch, the stitch in the seat, the colour of the light at night.
+      </p>
+    </section>
+
+    <!-- ================================= SERVICES ================================= -->
+    <section class="services container" id="services" aria-labelledby="services-title">
+      <header class="section-head">
+        <p class="eyebrow reveal">Services</p>
+        <h2 class="section-title reveal" id="services-title">Six disciplines.<br><em>One workshop.</em></h2>
+      </header>
+
+      <ol class="service-list">
+        <li class="service reveal">
+          <span class="service__num mono">01</span>
+          <h3 class="service__name">Paint &amp; Wrap</h3>
+          <p class="service__desc">Full respray in solid, metallic, pearl or satin finishes, or paint-protection and colour-change film laid by hand.</p>
+        </li>
+        <li class="service reveal">
+          <span class="service__num mono">02</span>
+          <h3 class="service__name">Wheels &amp; Stance</h3>
+          <p class="service__desc">Forged and flow-formed wheels, coilovers and air suspension, set up for the look without giving up the drive.</p>
+        </li>
+        <li class="service reveal">
+          <span class="service__num mono">03</span>
+          <h3 class="service__name">Performance</h3>
+          <p class="service__desc">Intake, exhaust, calibration and brakes, specified as a balanced package and verified on the road.</p>
+        </li>
+        <li class="service reveal">
+          <span class="service__num mono">04</span>
+          <h3 class="service__name">Interiors</h3>
+          <p class="service__desc">Retrims in leather, Alcantara and technical fabrics, with contrast stitching and bespoke detailing.</p>
+        </li>
+        <li class="service reveal">
+          <span class="service__num mono">05</span>
+          <h3 class="service__name">Lighting</h3>
+          <p class="service__desc">Signature daytime lights, smoked and sequential lamps, and ambient interior lighting.</p>
+        </li>
+        <li class="service reveal">
+          <span class="service__num mono">06</span>
+          <h3 class="service__name">Ceramic Protection</h3>
+          <p class="service__desc">Multi-stage paint correction and ceramic coating to protect the finish and deepen the gloss.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ================================= CONFIGURATOR ================================= -->
+    <section class="configurator" id="configurator" aria-labelledby="config-title">
+      <div class="container">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow reveal">Spec a build</p>
+            <h2 class="section-title reveal" id="config-title">Start the conversation<br><em>with a sketch.</em></h2>
+          </div>
+          <p class="section-intro reveal">Choose a direction below. It doesn’t lock anything in. It gives us a starting point, and it goes straight into your quote request.</p>
+        </header>
+
+        <div class="config" data-config>
+          <div class="config__stage">
+            <div class="config__light" aria-hidden="true"></div>
+            <svg class="car car--config" viewBox="0 0 1000 360" role="img" aria-labelledby="config-car-label" data-config-car>
+              <title id="config-car-label">Preview of your selected build</title>
+              <use href="#car"/>
+            </svg>
+            <div class="config__floor" aria-hidden="true"></div>
+            <p class="config__caption mono" aria-live="polite" data-config-caption></p>
+          </div>
+
+          <form class="config__controls" data-config-form aria-label="Build options">
+            <fieldset class="opt">
+              <legend class="opt__legend">Paint <span class="opt__value mono" data-value-for="paint"></span></legend>
+              <div class="swatches" data-options="paint"></div>
+            </fieldset>
+
+            <fieldset class="opt">
+              <legend class="opt__legend">Wheel design <span class="opt__value mono" data-value-for="wheel"></span></legend>
+              <div class="chips" data-options="wheel"></div>
+            </fieldset>
+
+            <fieldset class="opt">
+              <legend class="opt__legend">Wheel finish <span class="opt__value mono" data-value-for="finish"></span></legend>
+              <div class="swatches swatches--small" data-options="finish"></div>
+            </fieldset>
+
+            <fieldset class="opt">
+              <legend class="opt__legend">Brake calipers <span class="opt__value mono" data-value-for="caliper"></span></legend>
+              <div class="swatches swatches--small" data-options="caliper"></div>
+            </fieldset>
+
+            <fieldset class="opt">
+              <legend class="opt__legend">Stance <span class="opt__value mono" data-value-for="stance"></span></legend>
+              <div class="chips" data-options="stance"></div>
+            </fieldset>
+
+            <fieldset class="opt">
+              <legend class="opt__legend">Packages</legend>
+              <div class="checks" data-options="packages"></div>
+            </fieldset>
+
+            <div class="config__summary">
+              <div>
+                <p class="mono config__summary-label">Indicative starting estimate</p>
+                <p class="config__estimate" data-estimate aria-live="polite">—</p>
+                <p class="config__fine">Guide only. Your final quote follows an in-person consultation.</p>
+              </div>
+              <div class="config__actions">
+                <a class="btn btn--primary" href="#quote" data-config-to-quote>Request a quote with this spec <span class="btn__arrow" aria-hidden="true">→</span></a>
+                <div class="config__secondary">
+                  <button class="btn btn--text" type="button" data-config-share>Copy link</button>
+                  <button class="btn btn--text" type="button" data-config-reset>Reset</button>
+                </div>
+                <p class="config__toast mono" role="status" data-config-toast></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================= FEATURED BUILD ================================= -->
+    <section class="feature container" id="work" aria-labelledby="feature-title">
+      <header class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">Featured build · Project 07</p>
+          <h2 class="section-title reveal" id="feature-title">Nightfall.</h2>
+        </div>
+        <p class="section-intro reveal">A grand tourer the owner wanted to disappear into the night and still turn heads at the valet stand. Drag to compare it as delivered with how it left the studio.</p>
+      </header>
+
+      <div class="compare reveal" data-compare style="--pos: 50%">
+        <div class="compare__pane compare__pane--before" aria-hidden="true">
+          <svg class="car" viewBox="0 0 1000 360" style="--paint:#9da2a8; --rim:#b8bcc2; --rim-face:#2b2d31; --caliper:#3a3a3d; --w-spoke:0; --w-mesh:1; --drop:0px"><use href="#car"/></svg>
+          <span class="compare__tag mono">As delivered</span>
+        </div>
+        <div class="compare__pane compare__pane--after" aria-hidden="true">
+          <svg class="car" viewBox="0 0 1000 360" style="--paint:#141519; --rim:#a17a4a; --rim-face:#0c0c0d; --caliper:#c8a46a; --drop:9px; --aero:1; --lamp:#fff6e2"><use href="#car"/></svg>
+          <span class="compare__tag compare__tag--after mono">Nightfall</span>
+        </div>
+        <div class="compare__handle" aria-hidden="true"><span></span></div>
+        <label class="visually-hidden" for="compare-range">Compare before and after</label>
+        <input class="compare__range" id="compare-range" type="range" min="0" max="100" value="50" data-compare-range>
+      </div>
+
+      <dl class="specs">
+        <div class="spec reveal"><dt class="mono">Finish</dt><dd>Satin obsidian, 3-stage</dd></div>
+        <div class="spec reveal"><dt class="mono">Wheels</dt><dd>20″ forged, satin bronze</dd></div>
+        <div class="spec reveal"><dt class="mono">Ride height</dt><dd><span data-count="35">35</span> mm lower</dd></div>
+        <div class="spec reveal"><dt class="mono">Studio time</dt><dd><span data-count="11">11</span> weeks</dd></div>
+      </dl>
+    </section>
+
+    <!-- ================================= PROCESS ================================= -->
+    <section class="process" id="process" aria-labelledby="process-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow reveal">Process</p>
+          <h2 class="section-title reveal" id="process-title">From first sketch<br><em>to final reveal.</em></h2>
+        </header>
+        <ol class="steps">
+          <li class="step reveal"><span class="step__num mono">I</span><h3>Consultation</h3><p>We meet you and the car, and talk through how you drive it and what it should say.</p></li>
+          <li class="step reveal" style="--d:.08s"><span class="step__num mono">II</span><h3>Design &amp; quote</h3><p>Renders, samples and a fixed, itemised quote. Nothing starts until you sign it off.</p></li>
+          <li class="step reveal" style="--d:.16s"><span class="step__num mono">III</span><h3>The build</h3><p>Weekly photo updates from the studio floor. You’re welcome to visit at any stage.</p></li>
+          <li class="step reveal" style="--d:.24s"><span class="step__num mono">IV</span><h3>Handover</h3><p>A detailed walk-around, care guidance and a follow-up check after the first few hundred miles.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================================= QUOTE ================================= -->
+    <section class="quote" id="quote" aria-labelledby="quote-title">
+      <div class="container quote__grid">
+        <div class="quote__intro">
+          <p class="eyebrow reveal">Request a quote</p>
+          <h2 class="section-title reveal" id="quote-title">Tell us about<br><em>the car.</em></h2>
+          <p class="reveal">We reply to every enquiry personally, usually within two working days.</p>
+
+          <div class="build-card reveal" data-build-card>
+            <div class="build-card__head">
+              <p class="mono">Your spec</p>
+              <a class="btn btn--text" href="#configurator">Edit</a>
+            </div>
+            <ul class="build-card__list" data-build-list></ul>
+            <label class="check check--inline">
+              <input type="checkbox" name="includeSpec" form="quote-form" checked data-include-spec>
+              <span class="check__box" aria-hidden="true"></span>
+              <span>Include this spec with my request</span>
+            </label>
+          </div>
+
+          <ul class="contact-lines" data-contact-lines hidden></ul>
+        </div>
+
+        <form class="form" id="quote-form" novalidate data-quote-form>
+          <div class="form__row form__row--2">
+            <div class="field">
+              <label for="q-name">Full name</label>
+              <input id="q-name" name="name" type="text" autocomplete="name" required maxlength="120" aria-describedby="q-name-err">
+              <p class="field__error" id="q-name-err"></p>
+            </div>
+            <div class="field">
+              <label for="q-email">Email</label>
+              <input id="q-email" name="email" type="email" autocomplete="email" required maxlength="160" aria-describedby="q-email-err">
+              <p class="field__error" id="q-email-err"></p>
+            </div>
+          </div>
+
+          <div class="form__row form__row--2">
+            <div class="field">
+              <label for="q-phone">Phone <span class="field__opt">optional</span></label>
+              <input id="q-phone" name="phone" type="tel" autocomplete="tel" maxlength="32" aria-describedby="q-phone-err">
+              <p class="field__error" id="q-phone-err"></p>
+            </div>
+            <div class="field">
+              <label for="q-vehicle">Vehicle (year, make, model)</label>
+              <input id="q-vehicle" name="vehicle" type="text" required maxlength="120" placeholder="e.g. 2022 BMW M4 Competition" aria-describedby="q-vehicle-err">
+              <p class="field__error" id="q-vehicle-err"></p>
+            </div>
+          </div>
+
+          <div class="form__row form__row--2">
+            <div class="field">
+              <label for="q-budget">Budget</label>
+              <select id="q-budget" name="budget" required aria-describedby="q-budget-err">
+                <option value="">Select a range</option>
+                <option>Under 5,000</option>
+                <option>5,000 – 15,000</option>
+                <option>15,000 – 40,000</option>
+                <option>40,000+</option>
+                <option>Not sure yet</option>
+              </select>
+              <p class="field__error" id="q-budget-err"></p>
+            </div>
+            <div class="field">
+              <label for="q-timeline">Timeline</label>
+              <select id="q-timeline" name="timeline" aria-describedby="q-timeline-err">
+                <option value="">Flexible</option>
+                <option>Within a month</option>
+                <option>1 – 3 months</option>
+                <option>3 – 6 months</option>
+                <option>Just exploring</option>
+              </select>
+              <p class="field__error" id="q-timeline-err"></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="q-message">What do you have in mind?</label>
+            <textarea id="q-message" name="message" rows="5" required minlength="10" maxlength="4000" aria-describedby="q-message-err"></textarea>
+            <p class="field__error" id="q-message-err"></p>
+          </div>
+
+          <!-- honeypot: hidden from people, filled in by bots -->
+          <div class="hp" aria-hidden="true">
+            <label for="q-company">Company</label>
+            <input id="q-company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" name="consent" required aria-describedby="q-consent-err">
+              <span class="check__box" aria-hidden="true"></span>
+              <span>I agree to be contacted about this enquiry.</span>
+            </label>
+            <p class="field__error" id="q-consent-err"></p>
+          </div>
+
+          <div class="form__footer">
+            <button class="btn btn--primary btn--submit" type="submit" data-submit>
+              <span class="btn__label">Send request</span>
+              <span class="btn__spinner" aria-hidden="true"></span>
+            </button>
+            <p class="form__status" role="status" aria-live="polite" data-form-status></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================= FOOTER ================================= -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p class="site-footer__big" aria-hidden="true">Big Toys<span>Customs</span></p>
+      <div class="site-footer__cols">
+        <nav aria-label="Footer">
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#configurator">Spec a build</a></li>
+            <li><a href="#work">Featured build</a></li>
+            <li><a href="#quote">Request a quote</a></li>
+          </ul>
+        </nav>
+        <ul class="site-footer__contact" data-footer-contact></ul>
+      </div>
+      <p class="site-footer__legal mono">© <span data-year></span> Big Toys Customs. Vehicle renderings are illustrative.</p>
+    </div>
+  </footer>
+
+  <div class="grain" aria-hidden="true"></div>
+</body>
+</html>
