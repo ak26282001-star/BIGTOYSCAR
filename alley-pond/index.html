@@ -89,7 +89,7 @@ p{margin:0 0 1em}
 .brand b{font:900 1.02rem/1 var(--font-head);text-transform:uppercase;letter-spacing:.03em;display:block;white-space:nowrap}
 .brand small{display:block;font-size:.7rem;color:var(--gold-bright);letter-spacing:.14em;text-transform:uppercase;margin-top:3px;white-space:nowrap}
 .nav{display:flex;gap:4px}
-.nav a{text-decoration:none;font-weight:500;font-size:.92rem;padding:8px 10px;border-radius:8px;opacity:.88}
+.nav a{white-space:nowrap;text-decoration:none;font-weight:500;font-size:.92rem;padding:8px 10px;border-radius:8px;opacity:.88}
 .nav a:hover{opacity:1;background:rgba(255,255,255,.08)}
 .site-header .btn{min-height:40px;padding:.6em 1.1em;font-size:.85rem}
 .menu-btn{display:none;background:none;border:0;color:inherit;width:44px;height:44px;border-radius:10px;cursor:pointer}
@@ -406,6 +406,97 @@ main{position:relative}
 .managed b{color:var(--gold-bright)}
 
 /* =========================================================
+   Interactive 3D bay
+   ========================================================= */
+.bay3d{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}
+@media (max-width:960px){.bay3d{grid-template-columns:minmax(0,1fr)}}
+.bay3d-stage{position:relative;min-width:0;border-radius:24px;overflow:hidden;aspect-ratio:16/10;background:linear-gradient(#4b2a5c,#ec7c4a 60%,#2f7d4f 61%,#1d5c41);box-shadow:0 30px 60px -30px rgba(0,0,0,.7);border:1px solid rgba(232,197,106,.25)}
+@media (max-width:720px){.bay3d-stage{aspect-ratio:4/5}}
+.bay3d-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
+.bay3d-stage canvas:active{cursor:grabbing}
+.bay3d-hint{position:absolute;left:14px;top:14px;background:rgba(10,42,30,.6);color:var(--cream);border-radius:999px;padding:6px 12px;font-size:.78rem;letter-spacing:.04em;backdrop-filter:blur(4px);transition:opacity .6s;pointer-events:none}
+.bay3d-hint.gone{opacity:0}
+.bay3d-fallback{display:none;position:absolute;inset:0;place-items:center;text-align:center;padding:24px;color:var(--cream)}
+.bay3d.no-3d canvas,.bay3d.no-3d .bay3d-hint{display:none}
+.bay3d.no-3d .bay3d-fallback{display:grid}
+.bay3d-controls{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;align-items:center;gap:14px;padding:0 16px;flex-wrap:wrap}
+.swing-btn{min-width:170px;user-select:none;-webkit-user-select:none;touch-action:none}
+.swing-btn:disabled{opacity:.6;cursor:default;transform:none}
+.swing-btn.charging{background:var(--gold-bright);transform:scale(.97)}
+.power{position:relative;width:150px;height:14px;border-radius:999px;background:rgba(10,42,30,.65);border:1px solid rgba(232,197,106,.55);overflow:hidden}
+.power i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#6bc286,var(--gold-bright) 60%,#ff7a3d)}
+.power span{position:absolute;inset:0;display:grid;place-items:center;font:700 .6rem/1 var(--font-head);letter-spacing:.18em;text-transform:uppercase;color:var(--cream);mix-blend-mode:difference}
+.shot-panel{background:rgba(246,240,225,.05);border:1px solid rgba(246,240,225,.14);border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.shot-top{display:flex;justify-content:space-between;align-items:center}
+.shot-label{font:700 .7rem/1 var(--font-head);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-bright)}
+.shot-num{font-size:.8rem;opacity:.75}
+.shot-carry b{display:block;font:900 clamp(3rem,7vw,4.2rem)/1 var(--font-head);color:var(--tracer);font-variant-numeric:tabular-nums}
+.shot-carry span{font-size:.85rem;opacity:.75;text-transform:uppercase;letter-spacing:.1em}
+.shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}
+.shot-grid div{background:rgba(246,240,225,.06);border-radius:12px;padding:10px 12px;transition:background-color .4s}
+.shot-grid dt{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.shot-grid dd{margin:2px 0 0;font:800 1.1rem/1.2 var(--font-head);font-variant-numeric:tabular-nums}
+.shot-panel.flash .shot-grid div{background:rgba(255,179,64,.18)}
+.shot-history ol{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.shot-history li{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;font-size:.82rem}
+.shot-history li.empty{display:block;opacity:.6}
+.shot-history li i{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--tracer))}
+@media (max-width:960px){.shot-panel{display:grid;grid-template-columns:auto 1fr;gap:14px 20px;align-items:start}.shot-top,.shot-history{grid-column:1/-1}.shot-grid{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:560px){.shot-panel{grid-template-columns:1fr}.shot-grid{grid-template-columns:1fr 1fr}}
+
+/* =========================================================
+   Booking
+   ========================================================= */
+.booker{display:grid;grid-template-columns:1fr 320px;gap:clamp(18px,3vw,32px);align-items:start}
+@media (max-width:900px){.booker{grid-template-columns:1fr}}
+.booker-steps{display:grid;gap:22px;min-width:0}
+.booker fieldset{border:0;margin:0;padding:0;min-width:0}
+.booker legend{display:flex;align-items:center;gap:10px;font:800 1.05rem/1.2 var(--font-head);margin-bottom:12px;padding:0}
+.booker legend span{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--green-900);color:var(--gold-bright);font-size:.85rem}
+.svc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:620px){.svc-row{grid-template-columns:1fr}}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt label{display:block;cursor:pointer;background:#fffdf7;border:2px solid var(--cream-3);border-radius:14px;padding:12px 14px;transition:border-color .2s,background-color .2s,transform .15s}
+.opt label:hover{border-color:var(--fairway-light)}
+.opt input:checked+label{border-color:var(--green-900);background:var(--green-900);color:var(--cream)}
+.opt input:focus-visible+label{outline:3px solid var(--gold);outline-offset:2px}
+.opt label b{display:block;font:800 1rem/1.2 var(--font-head)}
+.opt label small{display:block;opacity:.75;font-size:.82rem;margin-top:2px}
+.chip-scroll{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.chip-scroll .opt{flex:none;scroll-snap-align:start}
+.chip-scroll label{text-align:center;padding:10px 12px;min-width:66px}
+.chip-scroll label b{font-size:1.25rem}
+.chip-scroll label small{text-transform:uppercase;letter-spacing:.08em;font-size:.68rem;margin:0}
+.time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.time-grid label{text-align:center;padding:10px 6px;font-weight:600}
+.fine{font-size:.82rem;color:var(--ink-soft);margin:10px 0 0}
+.stepper{display:inline-flex;align-items:center;border:2px solid var(--cream-3);border-radius:999px;background:#fffdf7}
+.stepper button{width:46px;height:46px;border:0;background:none;font-size:1.4rem;cursor:pointer;color:var(--green-900);border-radius:50%}
+.stepper button:disabled{opacity:.3;cursor:default}
+.stepper output{min-width:36px;text-align:center;font:800 1.2rem/1 var(--font-head)}
+.booker-summary{position:sticky;top:calc(var(--header-h) + 16px);background:var(--green-900);color:var(--cream);border-radius:24px;padding:22px;box-shadow:var(--shadow)}
+.booker-summary dl{margin:14px 0 18px;display:grid;gap:2px}
+.booker-summary dl div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(246,240,225,.12)}
+.booker-summary dt{opacity:.7}
+.booker-summary dd{margin:0;font-weight:600;text-align:right}
+.booker-summary .btn{width:100%}
+.booker-summary .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.booker-summary .fine{color:rgba(246,240,225,.7)}
+.putt-dialog{border:0;padding:0;border-radius:28px;width:min(520px,calc(100vw - 32px));background:var(--green-900);color:var(--cream);box-shadow:0 40px 80px -20px rgba(0,0,0,.6);overflow:hidden}
+.putt-dialog::backdrop{background:rgba(10,42,30,.7);backdrop-filter:blur(4px)}
+.putt-scene{width:100%;height:auto;background:linear-gradient(#1d5c41,#164a35)}
+.putt-copy{padding:20px 24px 24px;text-align:center}
+.putt-kicker{font:700 .72rem/1 var(--font-head);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-bright);margin-bottom:8px}
+.putt-copy h3{font-size:1.7rem;text-transform:uppercase;font-weight:900}
+.putt-copy h3,.putt-detail,.putt-next,.putt-actions{transition:opacity .5s,transform .5s}
+.putt-dialog.rolling .putt-copy h3,.putt-dialog.rolling .putt-detail,.putt-dialog.rolling .putt-next,.putt-dialog.rolling .putt-actions{opacity:0;transform:translateY(8px)}
+.putt-detail{margin:10px 0 4px;font-weight:600}
+.putt-next{font-size:.92rem;opacity:.8}
+.putt-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.putt-actions .btn--ghost{color:var(--cream)}
+
+/* =========================================================
    Reduced motion
    ========================================================= */
 @media (prefers-reduced-motion:reduce){
@@ -450,7 +541,7 @@ main{position:relative}
       <a href="#events">Events</a>
       <a href="#visit">Visit</a>
     </nav>
-    <a class="btn" href="#contact" data-book="bay">Book Now</a>
+    <a class="btn" href="#book" data-book="bay">Book Now</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><span></span></button>
   </div>
 </header>
@@ -635,8 +726,8 @@ main{position:relative}
     <p class="tagline fade-late">Est. 1949 <span>·</span> Reimagined 2026</p>
     <p class="hero-sub fade-late d2">Douglaston, Queens · Managed by Knox Golf Academy</p>
     <div class="hero-ctas fade-late d3">
-      <a class="btn" href="#contact" data-book="bay">Book a Bay</a>
-      <a class="btn btn--ghost" href="#about">Explore the center</a>
+      <a class="btn" href="#book" data-book="bay">Book a Bay</a>
+      <a class="btn btn--ghost" href="#swing">Take a swing</a>
     </div>
   </div>
   <button class="replay" id="replay" type="button" hidden>
@@ -652,6 +743,52 @@ main{position:relative}
     <div class="roll-fill" id="rollFill"></div>
     <div class="roll-ball" id="rollBall"><svg viewBox="0 0 20 20"><use href="#sym-ball"/></svg></div>
   </div>
+
+  <!-- 0. INTERACTIVE 3D BAY -->
+  <section class="section section--deep" id="swing" data-stop>
+    <div class="deco deco--cloud" data-speed="-0.1" style="width:240px;height:96px;right:6%;top:24px"><svg><use href="#sym-cloud"/></svg></div>
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">Bay 12 · Your turn</span>
+        <h2>Take a swing</h2>
+        <p class="lede">Hold the button to build power, then let it go. Every shot is traced and measured, just like in our ball-tracking bays. Drag the scene to walk around the golfer.</p>
+      </div>
+      <div class="bay3d reveal" id="bay3d" style="--d:1">
+        <div class="bay3d-stage">
+          <canvas id="bayCanvas" aria-label="Interactive 3D golfer on a driving range bay. Use the Swing button to hit a shot." role="img"></canvas>
+          <div class="bay3d-hint" id="bayHint">Drag to look around</div>
+          <div class="bay3d-fallback">
+            <p><b>3D view unavailable.</b> Your browser couldn't start the 3D scene, but you can still take a swing and see the shot data.</p>
+          </div>
+          <div class="bay3d-controls">
+            <div class="power" aria-hidden="true"><i id="powerFill"></i><span>Power</span></div>
+            <button class="btn swing-btn" id="swingBtn" type="button">Hold to swing</button>
+          </div>
+        </div>
+        <aside class="shot-panel" id="shotPanel" aria-live="polite">
+          <div class="shot-top">
+            <span class="shot-label">Shot data</span>
+            <span class="shot-num" id="shotNum">Ready</span>
+          </div>
+          <div class="shot-carry"><b id="mCarry">0</b><span>yd carry</span></div>
+          <dl class="shot-grid">
+            <div><dt>Ball speed</dt><dd id="mBall">–</dd></div>
+            <div><dt>Club speed</dt><dd id="mClub">–</dd></div>
+            <div><dt>Smash</dt><dd id="mSmash">–</dd></div>
+            <div><dt>Launch</dt><dd id="mLaunch">–</dd></div>
+            <div><dt>Spin</dt><dd id="mSpin">–</dd></div>
+            <div><dt>Apex</dt><dd id="mApex">–</dd></div>
+            <div><dt>Total</dt><dd id="mTotal">–</dd></div>
+            <div><dt>Curve</dt><dd id="mCurve">–</dd></div>
+          </dl>
+          <div class="shot-history">
+            <span class="shot-label">Last shots</span>
+            <ol id="shotHistory"><li class="empty">Your shots show up here</li></ol>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
 
   <!-- 1. ABOUT -->
   <section class="section" id="about" data-stop>
@@ -742,7 +879,7 @@ main{position:relative}
           <li>Full rounds on renowned virtual courses</li>
           <li>Practice modes with shot data on screen</li>
         </ul>
-        <p class="reveal" style="--d:3;margin-top:24px"><a class="btn" href="#contact" data-book="bay">Reserve a simulator</a></p>
+        <p class="reveal" style="--d:3;margin-top:24px"><a class="btn" href="#book" data-book="sim">Reserve a simulator</a></p>
       </div>
       <div class="sim reveal" id="sim" style="--d:2">
         <div class="sim-bezel">
@@ -828,7 +965,7 @@ main{position:relative}
       </div>
       <div class="knox reveal" style="--d:5">
         <div><b>Knox Golf Academy</b><p>Managing Alley Pond Golf Center and running every lesson and program on site.</p></div>
-        <a class="btn" href="#contact" data-book="lesson">Book a Lesson</a>
+        <a class="btn" href="#book" data-book="lesson">Book a Lesson</a>
       </div>
     </div>
   </section>
@@ -933,6 +1070,80 @@ main{position:relative}
     </div>
   </section>
 
+  <!-- BOOK A SLOT -->
+  <section class="section section--sand" id="book" data-stop>
+    <div class="deco deco--flag hide-sm" data-speed="-0.15" style="width:44px;height:96px;right:6%;top:40px"><svg><use href="#sym-flag"/></svg></div>
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">Book a Slot</span>
+        <h2>Pick your tee time</h2>
+        <p class="lede">Choose what you'd like to book, the day, the time and how many are playing. Sink the putt and we'll take you to the last step.</p>
+      </div>
+      <form class="booker reveal" id="booker" style="--d:1" novalidate>
+        <div class="booker-steps">
+          <fieldset>
+            <legend><span>1</span> What are you booking?</legend>
+            <div class="svc-row" id="svcRow"></div>
+          </fieldset>
+          <fieldset>
+            <legend><span>2</span> Pick a day</legend>
+            <div class="chip-scroll" id="dayRow"></div>
+          </fieldset>
+          <fieldset>
+            <legend><span>3</span> Pick a time</legend>
+            <div class="time-grid" id="timeRow"></div>
+            <p class="fine">Times shown are a guide. Our staff confirm availability for every booking.</p>
+          </fieldset>
+          <fieldset>
+            <legend><span>4</span> Players</legend>
+            <div class="stepper">
+              <button type="button" id="pMinus" aria-label="Fewer players">−</button>
+              <output id="pCount" aria-live="polite">2</output>
+              <button type="button" id="pPlus" aria-label="More players">+</button>
+            </div>
+          </fieldset>
+        </div>
+        <aside class="booker-summary">
+          <span class="shot-label">Your slot</span>
+          <dl>
+            <div><dt>Booking</dt><dd id="sumSvc">–</dd></div>
+            <div><dt>Day</dt><dd id="sumDay">–</dd></div>
+            <div><dt>Time</dt><dd id="sumTime">–</dd></div>
+            <div><dt>Players</dt><dd id="sumPlayers">2</dd></div>
+          </dl>
+          <button class="btn" id="bookBtn" type="submit" disabled>Book this slot</button>
+          <p class="fine" id="bookHelp">Pick a day and a time to continue.</p>
+        </aside>
+      </form>
+    </div>
+  </section>
+
+  <dialog class="putt-dialog" id="puttDialog" aria-labelledby="puttTitle">
+    <svg class="putt-scene" id="puttScene" viewBox="0 0 400 230" aria-hidden="true">
+      <defs><radialGradient id="pg" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#8fd27f"/><stop offset="1" stop-color="#4f9e5a"/></radialGradient></defs>
+      <ellipse cx="200" cy="150" rx="196" ry="70" fill="#3f8a4c"/>
+      <ellipse cx="200" cy="146" rx="182" ry="60" fill="url(#pg)"/>
+      <path d="M40 160 Q200 110 360 150" stroke="#fff" stroke-opacity=".1" stroke-width="16" fill="none"/>
+      <path id="puttLine" d="M66 182 Q 190 70 312 140" fill="none" stroke="#fff6d6" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round" opacity="0"/>
+      <ellipse id="cupRing" cx="312" cy="140" rx="13" ry="5" fill="none" stroke="#fff6d6" stroke-width="2" opacity="0"/>
+      <ellipse cx="312" cy="140" rx="13" ry="5" fill="#123222"/>
+      <g id="puttFlag"><line x1="315" y1="140" x2="315" y2="40" stroke="#f6f0e1" stroke-width="3"/><path d="M316 41 l40 12 -40 12z" fill="#c9a24a"/></g>
+      <ellipse id="puttShadow" cx="66" cy="186" rx="8" ry="2.5" fill="#000" opacity=".25"/>
+      <circle id="puttBall" cx="66" cy="182" r="7.5" fill="#fffef8" stroke="#c7c2b4"/>
+      <g id="confetti"></g>
+    </svg>
+    <div class="putt-copy">
+      <p class="putt-kicker" id="puttKicker">Lining it up…</p>
+      <h3 id="puttTitle">It's in the cup!</h3>
+      <p class="putt-detail" id="puttDetail"></p>
+      <p class="putt-next" id="puttNext"></p>
+      <div class="putt-actions">
+        <a class="btn" id="puttGo" href="tel:+17182259187">Call to confirm</a>
+        <button class="btn btn--ghost" type="button" id="puttClose">Close</button>
+      </div>
+    </div>
+  </dialog>
+
   <!-- 11. CONTACT -->
   <section class="section" id="contact" data-stop>
     <div class="deco deco--tree" data-speed="0.1" style="width:160px;height:226px;right:-40px;top:-10px"><svg><use href="#sym-tree"/></svg></div>
@@ -948,8 +1159,8 @@ main{position:relative}
         </address>
         <p class="reveal" style="--d:2;color:var(--ink-soft)">Just off Northern Boulevard by Alley Pond Park, in Douglaston, Queens.</p>
         <div class="contact-ctas reveal" style="--d:3">
-          <a class="btn" href="tel:+17182259187" data-book="bay">Book a Bay</a>
-          <a class="btn btn--green" href="tel:+17182259187" data-book="lesson">Book a Lesson</a>
+          <a class="btn" href="#book" data-book="bay">Book a Bay</a>
+          <a class="btn btn--green" href="#book" data-book="lesson">Book a Lesson</a>
         </div>
       </div>
       <div class="map reveal" style="--d:2">
@@ -990,9 +1201,12 @@ main{position:relative}
    ============================================================ */
 const SITE = {
   bookBayUrl:    "",  // [Book a Bay link]
+  bookSimUrl:    "",  // [Simulator booking link]; falls back to the bay link
   bookLessonUrl: "",  // [Book a Lesson link]
   instagram:     "",  // [Instagram URL]
-  facebook:      ""   // [Facebook URL]
+  facebook:      "",  // [Facebook URL]
+  // Times offered in the slot picker (24h). Replace with your real tee-sheet times.
+  slotTimes: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"]
 };
 
 (() => {
@@ -1009,10 +1223,6 @@ const SITE = {
   const mobileMQ = matchMedia("(max-width: 720px)");
 
   /* ---------- links ---------- */
-  $$("[data-book]").forEach(a => {
-    const url = a.dataset.book === "lesson" ? SITE.bookLessonUrl : SITE.bookBayUrl;
-    if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
-  });
   $$("[data-social]").forEach(a => {
     const url = SITE[a.dataset.social];
     if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
@@ -1311,6 +1521,664 @@ const SITE = {
     });
   }, { threshold: .35 });
   io.observe(sim); io.observe(mini);
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+/* ============================================================
+   Interactive 3D bay (Three.js)
+   ============================================================ */
+(() => {
+  "use strict";
+  const root = document.getElementById("bay3d");
+  const canvas = document.getElementById("bayCanvas");
+  const swingBtn = document.getElementById("swingBtn");
+  const powerFill = document.getElementById("powerFill");
+  const hint = document.getElementById("bayHint");
+  const panel = document.getElementById("shotPanel");
+  const out = id => document.getElementById(id);
+  const M = { carry: out("mCarry"), ball: out("mBall"), club: out("mClub"), smash: out("mSmash"), launch: out("mLaunch"),
+              spin: out("mSpin"), apex: out("mApex"), total: out("mTotal"), curve: out("mCurve"), num: out("shotNum"), hist: out("shotHistory") };
+
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const easeInOut = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const easeIn = t => t * t * t;
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const small = matchMedia("(max-width: 720px)").matches;
+
+  /* ---------- shot data (works with or without 3D) ---------- */
+  let shotCount = 0;
+  const history = [];
+  function makeShot(power) {
+    const r = Math.random;
+    const ball = Math.round(92 + power * 76 + (r() - .5) * 4);   // mph
+    const smash = 1.42 + r() * .07;
+    const launch = 10.5 + r() * 5.5;                             // degrees
+    const spin = Math.round(2100 + r() * 1100);                  // rpm
+    const carry = Math.round(ball * 1.6 * (.96 + r() * .06));    // yards
+    const total = carry + Math.round(7 + r() * 15);
+    const apex = Math.round(carry * .36 + launch * 2.2);         // feet
+    const curve = Math.round((r() - .5) * 26);                   // yards, + is right
+    return { ball, club: Math.round(ball / smash), smash, launch, spin, carry, total, apex, curve };
+  }
+  function resetPanel(shot) {
+    shotCount++;
+    M.num.textContent = `Shot ${shotCount}`;
+    M.carry.textContent = "0";
+    ["ball", "club", "smash", "launch", "spin", "apex", "total", "curve"].forEach(k => M[k].textContent = "–");
+    panel.classList.remove("flash");
+    return shot;
+  }
+  function showLaunchData(s) {
+    M.ball.textContent = `${s.ball} mph`;
+    M.club.textContent = `${s.club} mph`;
+    M.smash.textContent = s.smash.toFixed(2);
+    M.launch.textContent = `${s.launch.toFixed(1)}°`;
+    M.spin.textContent = `${s.spin.toLocaleString()} rpm`;
+    panel.classList.add("flash");
+    setTimeout(() => panel.classList.remove("flash"), 700);
+  }
+  function showLandingData(s) {
+    M.carry.textContent = s.carry;
+    M.apex.textContent = `${s.apex} ft`;
+    M.curve.textContent = s.curve === 0 ? "Straight" : `${Math.abs(s.curve)} yd ${s.curve > 0 ? "R" : "L"}`;
+  }
+  function showFinalData(s) {
+    M.total.textContent = `${s.total} yd`;
+    history.unshift(s);
+    history.length = Math.min(history.length, 5);
+    const best = Math.max(...history.map(h => h.total), 1);
+    M.hist.innerHTML = history.map((h, i) =>
+      `<li><span>#${shotCount - i}</span><i style="width:${Math.round(h.total / best * 100)}%"></i><span>${h.total} yd</span></li>`).join("");
+  }
+
+  /* ---------- power meter + swing input ---------- */
+  let charging = false, chargeStart = 0, busy = false, power = 0;
+  function meterLoop() {
+    if (!charging) return;
+    const t = (performance.now() - chargeStart) / 1300;
+    power = .5 - .5 * Math.cos(t * Math.PI * 2);
+    powerFill.style.width = (power * 100).toFixed(1) + "%";
+    requestAnimationFrame(meterLoop);
+  }
+  function startCharge() {
+    if (busy || charging) return;
+    charging = true; chargeStart = performance.now();
+    swingBtn.classList.add("charging"); swingBtn.textContent = "Release!";
+    requestAnimationFrame(meterLoop);
+  }
+  function release() {
+    if (!charging) return;
+    charging = false;
+    swingBtn.classList.remove("charging");
+    // a quick tap gives a smooth, well-struck shot
+    const held = performance.now() - chargeStart;
+    const p = held < 200 ? .82 + Math.random() * .12 : Math.max(.25, power);
+    powerFill.style.width = (p * 100).toFixed(1) + "%";
+    swing(p);
+  }
+  swingBtn.addEventListener("pointerdown", e => { e.preventDefault(); swingBtn.setPointerCapture?.(e.pointerId); startCharge(); });
+  swingBtn.addEventListener("pointerup", release);
+  swingBtn.addEventListener("pointercancel", release);
+  swingBtn.addEventListener("keydown", e => { if ((e.key === " " || e.key === "Enter") && !e.repeat) { e.preventDefault(); startCharge(); } });
+  swingBtn.addEventListener("keyup", e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); release(); } });
+  swingBtn.addEventListener("click", e => e.preventDefault());
+
+  const setBusy = b => {
+    busy = b; swingBtn.disabled = b;
+    swingBtn.textContent = b ? "Watch it fly…" : "Hold to swing";
+  };
+
+  /* ---------- 3D scene ---------- */
+  let gl = null;
+  try { if (window.THREE) gl = initScene(); } catch (err) { console.warn("3D bay disabled:", err); gl = null; }
+  if (!gl) root.classList.add("no-3d");
+
+  // without WebGL the button still produces a full shot readout
+  function swing(p) {
+    const shot = resetPanel(makeShot(p));
+    setBusy(true);
+    if (gl) { gl.swing(shot); return; }
+    setTimeout(() => showLaunchData(shot), 300);
+    setTimeout(() => showLandingData(shot), 1200);
+    setTimeout(() => { showFinalData(shot); setBusy(false); }, 1700);
+  }
+
+  function initScene() {
+    const T = THREE;
+    const renderer = new T.WebGLRenderer({ canvas, antialias: !small, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, small ? 1.5 : 2));
+    renderer.outputEncoding = T.sRGBEncoding;
+    renderer.shadowMap.enabled = !small;
+    renderer.shadowMap.type = T.PCFSoftShadowMap;
+
+    const scene = new T.Scene();
+    const camera = new T.PerspectiveCamera(small ? 50 : 40, 1.6, .05, 500);
+
+    // sky gradient
+    const sky = document.createElement("canvas"); sky.width = 4; sky.height = 256;
+    const sg = sky.getContext("2d").createLinearGradient(0, 0, 0, 256);
+    [[0, "#22183f"], [.32, "#4b2a5c"], [.58, "#a8486a"], [.8, "#ec7c4a"], [1, "#f7b765"]].forEach(([o, c]) => sg.addColorStop(o, c));
+    const sctx = sky.getContext("2d"); sctx.fillStyle = sg; sctx.fillRect(0, 0, 4, 256);
+    const skyTex = new T.CanvasTexture(sky); skyTex.encoding = T.sRGBEncoding;
+    scene.background = skyTex;
+    scene.fog = new T.Fog(0xe0905e, 60, 230);
+
+    scene.add(new T.HemisphereLight(0xffe0c0, 0x2f5d3a, .8));
+    const sun = new T.DirectionalLight(0xffb27a, .9); sun.position.set(-40, 25, -80); scene.add(sun);
+    const key = new T.DirectionalLight(0xfff1dc, .75); key.position.set(6, 10, 7);
+    key.castShadow = !small; key.shadow.mapSize.set(1024, 1024);
+    Object.assign(key.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: 1, far: 30 });
+    scene.add(key);
+
+    const toon = c => new T.MeshToonMaterial({ color: c });
+    const lam = c => new T.MeshLambertMaterial({ color: c });
+    const mesh = (geo, mat, parent, pos, shadow = true) => {
+      const m = new T.Mesh(geo, mat);
+      if (pos) m.position.set(...pos);
+      m.castShadow = shadow && !small; m.receiveShadow = !small;
+      parent.add(m); return m;
+    };
+
+    // ground with mowing stripes
+    const stripes = document.createElement("canvas"); stripes.width = 2; stripes.height = 64;
+    const st = stripes.getContext("2d");
+    st.fillStyle = "#3f8a4f"; st.fillRect(0, 0, 2, 32); st.fillStyle = "#4b9a59"; st.fillRect(0, 32, 2, 32);
+    const gTex = new T.CanvasTexture(stripes); gTex.wrapS = gTex.wrapT = T.RepeatWrapping; gTex.repeat.set(1, 30); gTex.encoding = T.sRGBEncoding;
+    gTex.magFilter = T.NearestFilter;
+    const ground = mesh(new T.PlaneGeometry(400, 400), new T.MeshLambertMaterial({ map: gTex }), scene, [0, 0, -120], false);
+    ground.rotation.x = -Math.PI / 2;
+
+    // hitting deck + mat + bay dividers
+    const deck = mesh(new T.BoxGeometry(14, .12, 5), lam(0x173f2d), scene, [0, -.05, 2.2], false);
+    deck.receiveShadow = !small;
+    mesh(new T.BoxGeometry(14, .02, .08), lam(0xc9a24a), scene, [0, .02, -.3], false);
+    mesh(new T.BoxGeometry(1.6, .03, 1.5), lam(0x3f9a5e), scene, [.3, .02, .3], false).receiveShadow = !small;
+    [-1.7, 2.3].forEach(z => {
+      mesh(new T.BoxGeometry(.12, 2.6, .12), lam(0x0e2c20), scene, [-1.4, 1.3, z]);
+    });
+
+    // golfer: faces +X, target is down the -Z axis
+    const C = { skin: 0xf2c39d, shirt: 0xf6f0e1, pants: 0x23364a, cap: 0x1d5c41, gold: 0xc9a24a, shoe: 0xfffaf0, ink: 0x14251c };
+    const golfer = new T.Group(); scene.add(golfer);
+    const cyl = (rt, rb, h, seg = small ? 10 : 16) => new T.CylinderGeometry(rt, rb, h, seg);
+    const sph = (r, seg = small ? 14 : 22) => new T.SphereGeometry(r, seg, seg);
+    const between = (a, b, r, mat, parent) => {
+      const A = new T.Vector3(...a), B = new T.Vector3(...b), len = A.distanceTo(B);
+      const m = mesh(cyl(r, r, len), mat, parent);
+      m.position.copy(A).add(B).multiplyScalar(.5);
+      m.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), B.clone().sub(A).normalize());
+      return m;
+    };
+    // legs + shoes
+    [-1, 1].forEach(s => {
+      between([.02, .82, s * .1], [.04, .08, s * .19], .075, toon(C.pants), golfer);
+      mesh(new T.BoxGeometry(.26, .09, .12), toon(C.shoe), golfer, [.08, .045, s * .19]);
+    });
+    // upper body turns around Y
+    const upper = new T.Group(); upper.position.set(0, .82, 0); golfer.add(upper);
+    mesh(cyl(.2, .17, .52), toon(C.shirt), upper, [0, .27, 0]);
+    mesh(cyl(.205, .205, .05), toon(C.gold), upper, [0, .34, 0], false);
+    mesh(cyl(.176, .176, .07), toon(C.ink), upper, [0, .02, 0], false);
+    mesh(new T.BoxGeometry(.03, .06, .05), toon(C.gold), upper, [.17, .02, 0], false);
+    mesh(new T.ConeGeometry(.08, .09, 3), toon(C.cap), upper, [.15, .5, 0], false).rotation.z = Math.PI;
+    // head (stays mostly still, like a good golfer)
+    const head = new T.Group(); head.position.set(.02, 1.5, 0); golfer.add(head);
+    mesh(cyl(.06, .07, .14), toon(C.skin), golfer, [.01, 1.36, 0]);
+    mesh(sph(.21), toon(C.skin), head);
+    [-1, 1].forEach(s => {
+      mesh(sph(.045, 10), toon(C.skin), head, [0, 0, s * .205]);
+      mesh(sph(.03, 10), toon(C.ink), head, [.185, .03, s * .075], false);
+      mesh(sph(.01, 6), new T.MeshBasicMaterial({ color: 0xffffff }), head, [.21, .045, s * .068], false);
+      mesh(sph(.032, 10), new T.MeshToonMaterial({ color: 0xf19a8a }), head, [.17, -.05, s * .12], false);
+    });
+    const smile = mesh(new T.TorusGeometry(.055, .012, 6, 16, Math.PI), toon(0x8a3b2a), head, [.2, -.06, 0], false);
+    smile.rotation.set(Math.PI / 2, Math.PI / 2, 0); smile.rotateX(Math.PI);
+    mesh(new T.SphereGeometry(.218, 22, 12, 0, Math.PI * 2, 0, Math.PI / 2), toon(C.cap), head, [0, .02, 0]);
+    const brim = mesh(cyl(.15, .15, .02, 20), toon(C.gold), head, [.17, .03, 0], false); brim.scale.set(1, 1, 1.1);
+    mesh(sph(.025, 8), toon(C.gold), head, [0, .24, 0], false);
+
+    // arms + club, pivot at the shoulders, swing about the X axis
+    const arms = new T.Group(); arms.position.set(.04, .43, 0); upper.add(arms);
+    const HAND = [.33, -.43, 0];
+    [-1, 1].forEach(s => {
+      between([0, 0, s * .17], [HAND[0], HAND[1], s * .02], .055, toon(C.skin), arms);
+      between([0, 0, s * .17], [.06, -.1, s * .15], .085, toon(C.shirt), arms);
+    });
+    mesh(sph(.06, 12), toon(0xfffdf6), arms, HAND);
+    const club = new T.Group(); club.position.set(...HAND); arms.add(club);
+    const HEAD = [.38, -.79, 0];
+    between([0, 0, 0], HEAD, .012, new T.MeshStandardMaterial({ color: 0xc9ced4, metalness: .8, roughness: .3 }), club);
+    between([0, .03, 0], [HEAD[0] * .22, HEAD[1] * .22, 0], .022, toon(C.ink), club);
+    const ch = mesh(new T.BoxGeometry(.11, .045, .085), new T.MeshStandardMaterial({ color: 0x3b4652, metalness: .6, roughness: .35 }), club, [HEAD[0] + .02, HEAD[1] - .005, -.035]);
+    ch.rotation.z = -.5;
+
+    // ball + tee: the club head at address sits just behind it
+    golfer.updateMatrixWorld(true);
+    const headWorld = new T.Vector3(); ch.getWorldPosition(headWorld);
+    const BALL_R = .045;
+    const TEE = new T.Vector3(headWorld.x, BALL_R + .035, headWorld.z - .1);
+    const ballMat = new T.MeshToonMaterial({ color: 0xffffff });
+    const ball = mesh(sph(BALL_R, 16), ballMat, scene, TEE.toArray());
+    mesh(cyl(.008, .004, .05, 8), lam(0xf6f0e1), scene, [TEE.x, .035, TEE.z], false);
+    // glow sprite keeps the ball visible far down range
+    const glowC = document.createElement("canvas"); glowC.width = glowC.height = 64;
+    const gc = glowC.getContext("2d"), rg = gc.createRadialGradient(32, 32, 0, 32, 32, 32);
+    rg.addColorStop(0, "rgba(255,250,230,1)"); rg.addColorStop(.25, "rgba(255,200,110,.9)"); rg.addColorStop(1, "rgba(255,160,60,0)");
+    gc.fillStyle = rg; gc.fillRect(0, 0, 64, 64);
+    const glow = new T.Sprite(new T.SpriteMaterial({ map: new T.CanvasTexture(glowC), sizeAttenuation: false, depthWrite: false, transparent: true, fog: false }));
+    glow.scale.set(.045, .045, 1); glow.visible = false; scene.add(glow);
+
+    // range: target greens, flags, yardage signs, trees, a passing train
+    const YD = .4; // scene units per yard (range is compressed so the shot stays readable)
+    const flags = [];
+    const sign = (txt, x, z) => {
+      const c = document.createElement("canvas"); c.width = 128; c.height = 64;
+      const g = c.getContext("2d"); g.fillStyle = "#f6f0e1"; g.fillRect(0, 0, 128, 64);
+      g.strokeStyle = "#1d5c41"; g.lineWidth = 8; g.strokeRect(4, 4, 120, 56);
+      g.fillStyle = "#1d5c41"; g.font = "900 40px Archivo, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(txt, 64, 34);
+      const tex = new T.CanvasTexture(c); tex.encoding = T.sRGBEncoding;
+      const m = mesh(new T.PlaneGeometry(2.4, 1.2), new T.MeshBasicMaterial({ map: tex }), scene, [x, 1.6, z], false);
+      m.rotation.y = Math.atan2(4 - x, 10 - z);
+      mesh(new T.BoxGeometry(.15, 1.2, .15), lam(0x14251c), scene, [x, .5, z], false);
+    };
+    [[50, -9], [100, 11], [150, -14], [200, 16], [250, -20]].forEach(([yd, x]) => sign(String(yd), x, -yd * YD));
+    const green = (x, z, r, flagColor) => {
+      const g1 = mesh(new T.CircleGeometry(r * 1.15, 32), lam(0x5da45a), scene, [x, .015, z], false); g1.rotation.x = -Math.PI / 2; g1.scale.y = .8;
+      const g2 = mesh(new T.CircleGeometry(r, 32), lam(0x86c46a), scene, [x, .02, z], false); g2.rotation.x = -Math.PI / 2; g2.scale.y = .8;
+      mesh(cyl(.05, .05, 3.2, 6), lam(0xf6f0e1), scene, [x, 1.6, z], false);
+      const f = mesh(new T.PlaneGeometry(1.1, .7), new T.MeshLambertMaterial({ color: flagColor, side: T.DoubleSide }), scene, [x + .55, 2.85, z], false);
+      flags.push(f);
+    };
+    green(-6, -36, 4, 0xe85d4a); green(8, -62, 5, 0xffffff); green(-4, -88, 6, 0xc9a24a); green(10, -110, 6, 0xf2e05a);
+    const treeMat = toon(0x1f4a33), treeMat2 = toon(0x2a5d3e), trunkMat = toon(0x4a3426);
+    const treeGeo = new T.ConeGeometry(1, 2.2, 7), trunkGeo = cyl(.15, .2, .8, 6);
+    for (let i = 0; i < (small ? 34 : 70); i++) {
+      const side = i % 2 ? 1 : -1, back = i % 7 === 0;
+      const x = back ? (Math.random() - .5) * 180 : side * (34 + Math.random() * 30);
+      const z = back ? -150 - Math.random() * 20 : 6 - Math.random() * 160;
+      const s = 2 + Math.random() * 2.5;
+      const t = new T.Group(); t.position.set(x, 0, z); scene.add(t);
+      const tr = new T.Mesh(trunkGeo, trunkMat); tr.position.y = .4 * s; tr.scale.setScalar(s); t.add(tr);
+      const cone = new T.Mesh(treeGeo, i % 3 ? treeMat : treeMat2); cone.position.y = 1.9 * s; cone.scale.setScalar(s); t.add(cone);
+    }
+    const sunDisk = new T.Mesh(new T.CircleGeometry(14, 40), new T.MeshBasicMaterial({ color: 0xffe2a0, fog: false }));
+    sunDisk.position.set(-40, 16, -260); scene.add(sunDisk);
+    const train = new T.Group(); scene.add(train);
+    const carMat = lam(0xcfd3dc), winMat = new T.MeshBasicMaterial({ color: 0xffe9a8 });
+    for (let i = 0; i < 4; i++) {
+      mesh(new T.BoxGeometry(14, 3, 3), carMat, train, [i * 14.6, 4.5, 0], false);
+      mesh(new T.BoxGeometry(12, .9, 3.05), winMat, train, [i * 14.6, 5, 0], false);
+    }
+    train.position.set(200, 0, -175);
+
+    // tracer tubes (rebuilt for every shot)
+    const tracerMat = new T.MeshBasicMaterial({ color: 0xfff1c9, fog: false });
+    const tracerGlowMat = new T.MeshBasicMaterial({ color: 0xffb340, transparent: true, opacity: .35, blending: T.AdditiveBlending, depthWrite: false, fog: false });
+    let tracer = null, tracerGlow = null;
+    const SEG = 160, RAD = 6;
+
+    /* ---------- camera: drag to orbit ---------- */
+    const target = new T.Vector3(.25, .95, -.2);
+    const orbit = { az: .85, el: .2, dist: small ? 5.4 : 4.4 };
+    let camMode = "orbit", chase = 0;
+    const camPos = new T.Vector3(), camLook = new T.Vector3();
+    const orbitPos = () => new T.Vector3(
+      target.x + orbit.dist * Math.cos(orbit.el) * Math.cos(orbit.az),
+      target.y + orbit.dist * Math.sin(orbit.el),
+      target.z + orbit.dist * Math.cos(orbit.el) * Math.sin(orbit.az));
+    camPos.copy(orbitPos()); camLook.copy(target);
+
+    let drag = null;
+    canvas.addEventListener("pointerdown", e => { drag = { x: e.clientX, y: e.clientY, moved: false, id: e.pointerId }; });
+    addEventListener("pointermove", e => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved && Math.hypot(dx, dy) < 5) return;
+      if (!drag.moved) { drag.moved = true; canvas.setPointerCapture?.(e.pointerId); hint.classList.add("gone"); }
+      drag.x = e.clientX; drag.y = e.clientY;
+      orbit.az = clamp(orbit.az + dx * .008, -.6, 2.6);
+      if (e.pointerType !== "touch") orbit.el = clamp(orbit.el + dy * .005, -.05, .9);
+      if (camMode !== "orbit") camMode = "return";
+      requestRender();
+    });
+    const endDrag = e => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const tap = !drag.moved; drag = null;
+      // tapping the scene takes a quick swing
+      if (tap && e.type === "pointerup" && !busy) swing(.82 + Math.random() * .12);
+    };
+    addEventListener("pointerup", endDrag); addEventListener("pointercancel", endDrag);
+
+    /* ---------- swing + flight ---------- */
+    const SHOULDER_TURN = { back: -.55, follow: .85 };
+    function pose(a, c, turn, headTurn) {
+      arms.rotation.x = a; club.rotation.x = c; upper.rotation.y = turn; head.rotation.y = headTurn;
+    }
+    pose(0, 0, 0, 0);
+
+    let shot = null, t0 = 0, flight = null, landed = false, finalShown = false;
+    const K = { back: 950, top: 1100, impact: 1380, follow: 1950 };
+    // thin at the tee (close to the camera), wider down range so it stays visible
+    function taperedTube(curve, radius) {
+      const geo = new T.TubeGeometry(curve, SEG, radius, RAD, false);
+      const pos = geo.attributes.position, c = new T.Vector3(), v = new T.Vector3();
+      for (let i = 0; i <= SEG; i++) {
+        curve.getPointAt(i / SEG, c);
+        const k = lerp(.3, 3.2, Math.pow(i / SEG, .8));
+        for (let j = 0; j <= RAD; j++) {
+          const n = i * (RAD + 1) + j;
+          v.fromBufferAttribute(pos, n).sub(c).multiplyScalar(k).add(c);
+          pos.setXYZ(n, v.x, v.y, v.z);
+        }
+      }
+      return geo;
+    }
+    function buildFlight(s) {
+      const start = TEE.clone();
+      const land = new T.Vector3(TEE.x + s.curve * YD, BALL_R, TEE.z - s.carry * YD);
+      const H = s.apex / 3 * YD * 1.5;
+      const dur = 2300 + s.carry * 4;
+      const at = u => new T.Vector3(
+        lerp(start.x, land.x, u * u),
+        start.y + H * Math.sin(Math.PI * Math.pow(u, .82)),
+        lerp(start.z, land.z, u));
+      const pts = []; for (let i = 0; i <= SEG; i++) pts.push(at(i / SEG));
+      const curve = new T.CatmullRomCurve3(pts);
+      [tracer, tracerGlow].forEach(m => { if (m) { scene.remove(m); m.geometry.dispose(); } });
+      tracer = new T.Mesh(taperedTube(curve, .05), tracerMat);
+      tracerGlow = new T.Mesh(taperedTube(curve, .18), tracerGlowMat);
+      tracer.geometry.setDrawRange(0, 0); tracerGlow.geometry.setDrawRange(0, 0);
+      scene.add(tracer, tracerGlow);
+      const roll = (s.total - s.carry) * YD;
+      return { at, land, dur, roll, dirX: (land.x - start.x) / Math.max(1, start.z - land.z) };
+    }
+
+    function frameSwing(t) {
+      let a = 0, c = 0, turn = 0, ht = 0;
+      if (t < K.back) { const p = easeInOut(t / K.back); a = -2.2 * p; c = -1.55 * p; turn = SHOULDER_TURN.back * p; }
+      else if (t < K.top) { a = -2.2; c = -1.55; turn = SHOULDER_TURN.back; }
+      else if (t < K.impact) {
+        const p = easeIn((t - K.top) / (K.impact - K.top));
+        a = -2.2 * (1 - p); c = -1.55 * (1 - Math.pow(p, 2.6)); turn = SHOULDER_TURN.back * (1 - p) + .15 * p;
+      } else if (t < K.follow) {
+        const p = easeOut((t - K.impact) / (K.follow - K.impact));
+        a = 2.45 * p; c = 1.4 * p; turn = lerp(.15, SHOULDER_TURN.follow, p); ht = .5 * p;
+      } else { a = 2.45; c = 1.4; turn = SHOULDER_TURN.follow; ht = .5; }
+      pose(a, c, turn, ht);
+    }
+
+    function frameBall(t) {
+      if (t < K.impact) return;
+      const ft = t - K.impact;
+      if (!flight) {
+        flight = buildFlight(shot);
+        showLaunchData(shot);
+        glow.visible = true;
+        if (!reduce && camMode === "orbit") { camMode = "chase"; chase = 0; }
+      }
+      const f = ft / flight.dur;
+      if (f < 1) {
+        const u = f + .28 * f * (1 - f);
+        const p = flight.at(u);
+        ball.position.copy(p); glow.position.copy(p);
+        const n = Math.floor(u * SEG) * RAD * 6;
+        tracer.geometry.setDrawRange(0, n); tracerGlow.geometry.setDrawRange(0, n);
+        M.carry.textContent = Math.round(shot.carry * u);
+        return;
+      }
+      if (!landed) { landed = true; showLandingData(shot); tracer.geometry.setDrawRange(0, Infinity); tracerGlow.geometry.setDrawRange(0, Infinity); }
+      // two bounces, then roll out
+      const bt = ft - flight.dur, L = flight.land;
+      const hop = (d0, d1, h, p) => ({ d: lerp(d0, d1, p), y: 4 * h * p * (1 - p) });
+      const r = flight.roll;
+      let st;
+      if (bt < 450) st = hop(0, r * .45, 1.4, bt / 450);
+      else if (bt < 750) st = hop(r * .45, r * .75, .5, (bt - 450) / 300);
+      else if (bt < 1300) st = { d: lerp(r * .75, r, easeOut((bt - 750) / 550)), y: 0 };
+      else st = { d: r, y: 0 };
+      ball.position.set(L.x + flight.dirX * st.d, BALL_R + st.y, L.z - st.d);
+      glow.position.copy(ball.position);
+      if (bt >= 1300 && !finalShown) { finalShown = true; showFinalData(shot); }
+      if (bt >= 2600) {
+        if (camMode === "chase") camMode = "return";
+        setBusy(false); shot = null;
+      }
+    }
+
+    function updateCamera(dt) {
+      if (camMode === "orbit") {
+        camPos.lerp(orbitPos(), drag ? .35 : .12); camLook.lerp(target, .12);
+      } else if (camMode === "chase") {
+        chase = Math.min(1, chase + dt / 900);
+        const k = easeInOut(chase);
+        const bp = ball.position;
+        const behind = new T.Vector3(TEE.x + 1.6, 2.3, TEE.z + 6);
+        camPos.lerp(behind, .04 + .1 * k);
+        const look = new T.Vector3(lerp(TEE.x, bp.x, .85), Math.max(1, bp.y * .8), Math.min(-6, bp.z));
+        camLook.lerp(look, .06 + .1 * k);
+      } else if (camMode === "return") {
+        camPos.lerp(orbitPos(), .06); camLook.lerp(target, .06);
+        if (camPos.distanceTo(orbitPos()) < .05) camMode = "orbit";
+      }
+      camera.position.copy(camPos); camera.lookAt(camLook);
+    }
+
+    /* ---------- loop: only while visible ---------- */
+    let visible = false, last = performance.now(), rafId = 0, needRender = true;
+    function requestRender() { needRender = true; if (!rafId && visible) rafId = requestAnimationFrame(loop); }
+    function loop(now) {
+      rafId = 0;
+      const dt = Math.min(64, now - last); last = now;
+      if (shot) { const t = now - t0; frameSwing(t); frameBall(t); }
+      if (!reduce) {
+        flags.forEach((f, i) => { f.rotation.y = Math.sin(now / 420 + i) * .25; });
+        train.position.x -= dt * .012; if (train.position.x < -260) train.position.x = 200;
+      }
+      updateCamera(dt);
+      renderer.render(scene, camera);
+      const animating = shot || camMode !== "orbit" || drag || !reduce || camPos.distanceTo(orbitPos()) > .01;
+      if (visible && (animating || needRender)) rafId = requestAnimationFrame(loop);
+      needRender = false;
+    }
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !rafId) { last = performance.now(); rafId = requestAnimationFrame(loop); }
+    }, { rootMargin: "100px" }).observe(canvas);
+
+    function resize() {
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h; camera.updateProjectionMatrix();
+      requestRender();
+    }
+    new ResizeObserver(resize).observe(canvas);
+    resize();
+
+    return {
+      swing(s) {
+        shot = s; t0 = performance.now(); flight = null; landed = false; finalShown = false;
+        ball.position.copy(TEE); glow.visible = false;
+        [tracer, tracerGlow].forEach(m => m && m.geometry.setDrawRange(0, 0));
+        hint.classList.add("gone");
+        requestRender();
+      }
+    };
+  }
+})();
+</script>
+<script>
+/* ============================================================
+   Slot booking + putt-in-the-cup confirmation
+   ============================================================ */
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const form = $("booker");
+  const SERVICES = [
+    { id: "bay",    name: "Hitting bay",    note: "Ball-tracking bay",   max: 6, url: () => SITE.bookBayUrl },
+    { id: "sim",    name: "Simulator room", note: "Private room",        max: 6, url: () => SITE.bookSimUrl || SITE.bookBayUrl },
+    { id: "lesson", name: "Lesson",         note: "Knox Golf Academy",   max: 4, url: () => SITE.bookLessonUrl }
+  ];
+  const state = { svc: "bay", day: null, time: null, players: 2 };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const opt = (group, value, inner, checked) =>
+    `<div class="opt"><input type="radio" name="${group}" id="${group}-${esc(value)}" value="${esc(value)}"${checked ? " checked" : ""}><label for="${group}-${esc(value)}">${inner}</label></div>`;
+
+  // services
+  $("svcRow").innerHTML = SERVICES.map(s => opt("svc", s.id, `<b>${s.name}</b><small>${s.note}</small>`, s.id === state.svc)).join("");
+
+  // next 14 days
+  const days = [];
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  for (let i = 0; i < 14; i++) { const d = new Date(today); d.setDate(today.getDate() + i); days.push(d); }
+  const dayKey = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  $("dayRow").innerHTML = days.map((d, i) => opt("day", dayKey(d),
+    `<small>${i === 0 ? "Today" : d.toLocaleDateString("en-US", { weekday: "short" })}</small><b>${d.getDate()}</b><small>${d.toLocaleDateString("en-US", { month: "short" })}</small>`)).join("");
+
+  // times (from SITE.slotTimes, "HH:MM" 24h)
+  const fmtTime = hm => { const [h, m] = hm.split(":").map(Number); return new Date(2000, 0, 1, h, m).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }); };
+  function renderTimes() {
+    const now = new Date();
+    const isToday = state.day === dayKey(today);
+    $("timeRow").innerHTML = SITE.slotTimes.map(t => {
+      const [h, m] = t.split(":").map(Number);
+      const past = isToday && (h * 60 + m) <= now.getHours() * 60 + now.getMinutes();
+      return past ? "" : opt("time", t, fmtTime(t), t === state.time);
+    }).join("") || `<p class="fine">No more times today. Pick another day.</p>`;
+    if (!$("timeRow").querySelector(`input[value="${state.time}"]`)) state.time = null;
+  }
+  renderTimes();
+
+  const svc = () => SERVICES.find(s => s.id === state.svc);
+  function sync() {
+    const s = svc();
+    state.players = Math.min(state.players, s.max);
+    $("pCount").textContent = state.players;
+    $("pMinus").disabled = state.players <= 1;
+    $("pPlus").disabled = state.players >= s.max;
+    $("sumSvc").textContent = s.name;
+    $("sumDay").textContent = state.day ? new Date(state.day + "T12:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) : "–";
+    $("sumTime").textContent = state.time ? fmtTime(state.time) : "–";
+    $("sumPlayers").textContent = state.players;
+    const ready = state.day && state.time;
+    $("bookBtn").disabled = !ready;
+    $("bookHelp").textContent = ready ? "Tap to sink the putt and lock in your request." : `Pick ${!state.day ? "a day" : "a time"} to continue.`;
+  }
+  form.addEventListener("change", e => {
+    const { name, value } = e.target;
+    if (name === "svc") state.svc = value;
+    if (name === "day") { state.day = value; renderTimes(); }
+    if (name === "time") state.time = value;
+    sync();
+  });
+  $("pMinus").addEventListener("click", () => { state.players = Math.max(1, state.players - 1); sync(); });
+  $("pPlus").addEventListener("click", () => { state.players = Math.min(svc().max, state.players + 1); sync(); });
+  sync();
+
+  // every "Book" button on the page jumps here with the right service picked
+  document.querySelectorAll("[data-book]").forEach(a => {
+    a.setAttribute("href", "#book");
+    a.addEventListener("click", () => {
+      const id = a.dataset.book;
+      const input = document.getElementById("svc-" + id);
+      if (input) { input.checked = true; state.svc = id; sync(); }
+    });
+  });
+
+  /* ---------- the putt ---------- */
+  const dlg = $("puttDialog");
+  const ballEl = $("puttBall"), shadowEl = $("puttShadow"), line = $("puttLine"), ring = $("cupRing"), flag = $("puttFlag"), confetti = $("confetti");
+  const reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const START = { x: 66, y: 182 }, CTRL = { x: 190, y: 70 }, CUP = { x: 312, y: 140 };
+  const q = (a, c, b, t) => (1 - t) * (1 - t) * a + 2 * (1 - t) * t * c + t * t * b;
+  let raf = 0;
+
+  function placeBall(x, y, s = 1, o = 1) {
+    ballEl.setAttribute("cx", x.toFixed(1)); ballEl.setAttribute("cy", y.toFixed(1));
+    ballEl.setAttribute("r", (7.5 * s).toFixed(2)); ballEl.setAttribute("opacity", o);
+    shadowEl.setAttribute("cx", x.toFixed(1)); shadowEl.setAttribute("cy", (y + 4).toFixed(1)); shadowEl.setAttribute("opacity", .25 * o);
+  }
+  function burst() {
+    const colors = ["#c9a24a", "#e8c56a", "#f6f0e1", "#ff7a3d", "#6bc286"];
+    const bits = Array.from({ length: 28 }, (_, i) => {
+      const r = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      r.setAttribute("width", 5); r.setAttribute("height", 8); r.setAttribute("fill", colors[i % colors.length]);
+      confetti.appendChild(r);
+      const a = -Math.PI / 2 + (Math.random() - .5) * 2.2, v = 2.2 + Math.random() * 3;
+      return { r, x: CUP.x, y: CUP.y - 6, vx: Math.cos(a) * v, vy: Math.sin(a) * v, rot: Math.random() * 360, vr: (Math.random() - .5) * 20 };
+    });
+    let n = 0;
+    (function step() {
+      n++;
+      bits.forEach(b => {
+        b.vy += .12; b.x += b.vx; b.y += b.vy; b.rot += b.vr;
+        b.r.setAttribute("transform", `translate(${b.x.toFixed(1)} ${b.y.toFixed(1)}) rotate(${b.rot.toFixed(0)})`);
+        b.r.setAttribute("opacity", Math.max(0, 1 - n / 90).toFixed(2));
+      });
+      if (n < 90 && dlg.open) requestAnimationFrame(step); else confetti.innerHTML = "";
+    })();
+  }
+  function finish() {
+    placeBall(CUP.x, CUP.y + 3, .4, 0);
+    dlg.classList.remove("rolling");
+    $("puttKicker").textContent = "Hole in one";
+  }
+  function play() {
+    cancelAnimationFrame(raf);
+    confetti.innerHTML = "";
+    flag.removeAttribute("transform");
+    ring.setAttribute("opacity", 0);
+    dlg.classList.add("rolling");
+    $("puttKicker").textContent = "Lining it up…";
+    if (reduce()) { finish(); return; }
+    placeBall(START.x, START.y);
+    line.setAttribute("opacity", .8);
+    const t0 = performance.now(), AIM = 500, ROLL = 1700, DROP = 260;
+    (function step(now) {
+      const t = now - t0;
+      if (t < AIM) { raf = requestAnimationFrame(step); return; }
+      line.setAttribute("opacity", Math.max(0, .8 - (t - AIM) / 400));
+      const r = Math.min(1, (t - AIM) / ROLL);
+      const u = 1 - Math.pow(1 - r, 2.2);            // ball slows as it nears the cup
+      placeBall(q(START.x, CTRL.x, CUP.x, u), q(START.y, CTRL.y, CUP.y, u) + (u > .97 ? 0 : 0));
+      if (r < 1) { raf = requestAnimationFrame(step); return; }
+      const d = Math.min(1, (t - AIM - ROLL) / DROP);  // drop into the cup
+      placeBall(CUP.x, CUP.y + 3 * d, 1 - .6 * d, 1 - d);
+      if (d < 1) { raf = requestAnimationFrame(step); return; }
+      ring.setAttribute("opacity", 1);
+      flag.setAttribute("transform", `translate(0 -14)`);
+      burst();
+      finish();
+    })(t0);
+  }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    if (!state.day || !state.time) return;
+    const s = svc();
+    const when = `${$("sumDay").textContent} · ${fmtTime(state.time)}`;
+    $("puttDetail").textContent = `${s.name} · ${when} · ${state.players} ${state.players === 1 ? "player" : "players"}`;
+    const url = s.url();
+    const go = $("puttGo");
+    if (url) {
+      go.href = url; go.target = "_blank"; go.rel = "noopener";
+      go.textContent = "Complete booking";
+      $("puttNext").textContent = "Last step: confirm this slot on our booking page.";
+    } else {
+      go.href = "tel:+17182259187"; go.removeAttribute("target");
+      go.textContent = "Call (718) 225-9187";
+      $("puttNext").textContent = "Last step: give us a call and we'll confirm this slot for you.";
+    }
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+    play();
+  });
+  $("puttClose").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
+  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener("close", () => cancelAnimationFrame(raf));
 })();
 </script>
 </body>
