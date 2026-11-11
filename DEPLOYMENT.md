@@ -1,100 +1,44 @@
-# Big Toys Customs: deployment readiness
+# Deployment readiness
 
 The site is static (HTML, CSS and vanilla JS, no build step). Any static host works: Netlify, Vercel, Cloudflare Pages, GitHub Pages or S3.
-Everything you are expected to change lives in **`assets/js/config.js`**.
-
-## Status at a glance
-
-| Area | State |
-|---|---|
-| Layout (375 / 768 / 1280 / 1440 px) | Tested, no horizontal overflow |
-| Navigation (desktop, mobile menu, Esc, outside click, active section) | Tested |
-| Configurator (options, live preview, estimate, saved state, share link, reset) | Tested |
-| Quote form validation | Tested |
-| Quote submission (loading, success, server error, timeout, unconfigured) | Tested against a local mock backend |
-| Spec details included in quote payload | Tested |
-| Reduced-motion support | Tested |
-| **Real quote backend** | **Not configured, so the form cannot send yet (see below)** |
 
 ## Required before launch
 
-### 1. Quote backend (blocking)
-`config.js → quote.endpoint` is empty. Until it is set, the form **does not pretend to send**. It shows "Online requests aren't available right now" plus any contact details you've filled in, and logs a warning to the console.
+### 1. Test-drive form backend (blocking)
+`assets/js/config.js → testDrive.endpoint` is empty. Until it is set, submitting the form only shows the preview confirmation, which states that nothing was sent.
 
-Set it to any HTTPS endpoint that accepts a JSON `POST`, for example:
-- **Formspree / Getform / Basin**: create a form and paste its endpoint URL. These email each request to you; the `_subject` and `_replyto` fields are already included.
-- **Your own API or a serverless function** (Netlify Functions, Vercel, Cloudflare Workers) that emails the studio or writes to a CRM.
-
-The endpoint must:
-- return a 2xx status on success (anything else shows an error and keeps the visitor's input);
-- allow CORS from your site's domain, if it is on a different origin.
-
-**Do not put secret API keys in `config.js`.** It is public. If your provider needs a secret, put a serverless function in between.
+Set it to any HTTPS endpoint that accepts a JSON `POST` (Formspree, Getform, Basin, a serverless function or your own API). It must return a 2xx status on success and allow CORS from your domain. **Do not put secret API keys in `config.js`**; it is public.
 
 Payload sent:
 ```json
-{
-  "_subject": "Quote request: 2021 Porsche 911 Carrera S",
-  "name": "…", "email": "…", "_replyto": "…", "phone": "…",
-  "vehicle": "…", "budget": "…", "timeline": "…", "message": "…", "consent": true,
-  "build": {
-    "paint": "verde", "wheel": "mesh", "finish": "bronze", "caliper": "red",
-    "stance": "factory", "packages": ["interior"],
-    "estimate": { "min": 17700, "max": 22900, "currency": "GBP" },
-    "shareUrl": "https://…/?paint=verde&wheel=mesh&…#configurator"
-  },
-  "buildSummary": "Paint: Verde Profondo\nWheels: Cross-spoke mesh\n…",
-  "page": "…", "submittedAt": "ISO-8601"
-}
+{ "_subject": "Test drive request: …", "name": "…", "phone": "…", "car": "…", "date": "YYYY-MM-DD", "notes": "…", "page": "…", "submittedAt": "ISO-8601" }
 ```
-`build` is `null` and `buildSummary` is `"Not included"` if the visitor unticks "Include this spec with my request".
+On success the visitor sees "Request received"; on failure their input is kept and an error is shown under the button. Add server-side spam protection, and send one real test request after configuring.
 
-After configuring, send one real test request and confirm it arrives.
+### 2. Content to replace
+Everything in `[SQUARE BRACKETS]` in `index.html` is a placeholder: dealership name, city, address, hours, phone, email, lenders and rates, and the page `<title>` and description.
 
-Spam protection: there is a hidden honeypot field (`company`). Add server-side protection too, such as your provider's spam filter, reCAPTCHA or Cloudflare Turnstile, and rate limiting.
+### 3. Stock and photos
+- The six cards in `index.html` are examples. Each card's `data-type` (`Sedan`, `SUV`, `Truck`, `Coupe`) is what the filter buttons match.
+- Photos: put an `<img>` inside `.hero__photo-media` and each `.car-card__media` in place of the placeholder text. Add `width`/`height` attributes, and `loading="lazy"` on the card photos.
 
-### 2. Business details
-`config.js → contact` (`email`, `phone`, `address`, `instagram`) is empty, so nothing is shown. Once filled in, they appear beside the form, in the footer and in the form's error fallback. Also add `address`, `telephone`, `url` and opening hours to the JSON-LD block in `index.html` for local SEO.
-
-### 3. Pricing
-`config.js → pricing` holds **placeholder figures** used for the "indicative starting estimate". Replace them with real studio numbers, or set every value to `0` to show "On consultation" instead. Also confirm `currency`.
-
-### 4. Content to replace
-Copy and project data below are **placeholders written for the design**. Replace them with real information:
-- Featured build "Project 07 / Nightfall": its description and specs (finish, 20″ wheels, 35 mm, 11 weeks), plus the hero meta line.
-- Service descriptions, the reply time ("within two working days") and the process steps.
-- The configurator's option names (paint, wheel and package names) in `assets/js/main.js → OPTIONS`.
-
-### 5. Vehicle assets (photography)
-All car imagery is a **vector illustration** (an SVG sprite in `index.html`), so the site works with no photos. For the premium look at launch you'll want real images:
-- **Hero**: one cinematic studio shot, landscape, ≥ 2400 px wide, dark background, side or 3/4 view.
-- **Featured build**: a matched before/after pair taken from the same camera position (for the comparison slider).
-- **Optional**: 3–6 portfolio shots, plus interior and detail close-ups.
-- Export as AVIF or WebP with a JPG fallback, and add `width`/`height` attributes to avoid layout shift.
-- You need rights to every image (your own shoots, or properly licensed). The footer currently says "Vehicle renderings are illustrative". Update it once photos are used.
-- The configurator preview stays a recolourable illustration unless you commission per-option renders.
-
-### 6. Domain and SEO
-- Set absolute URLs: `og:image` (currently relative: `assets/img/og-image.jpg`, 1200×630) and add `<link rel="canonical" href="https://YOUR-DOMAIN/">`.
+### 4. Branding, domain and SEO
+- `assets/img/favicon.svg` and `assets/img/og-image.jpg` are left over from the previous site. Replace the favicon; the Open Graph image is no longer referenced.
+- Add `<link rel="canonical">`, Open Graph tags and `AutoDealer` JSON-LD once the name, address and domain are known.
 - Uncomment the `Sitemap:` line in `robots.txt` and add a `sitemap.xml`.
-- Register the site in Google Search Console and Google Business Profile.
 
-### 7. Legal and analytics
-- Add a privacy policy page (the form collects personal data) and link it next to the consent checkbox and in the footer.
-- If you add analytics or marketing pixels, you'll need a cookie-consent banner where required (UK/EU GDPR).
+### 5. Legal
+The form collects personal data: add a privacy policy and link it near the form.
+
+## Motion
+- CSS plus a small script (no animation library). Transform and opacity only, apart from the one clip-path wipe on the hero photo and border-colour changes on hover and focus.
+- Scroll animations run once, when 20% of the element is visible.
+- Nothing is hidden unless scripting is on (`<html class="js">`, removed again if `main.js` fails to load).
+- `prefers-reduced-motion` removes all movement and keeps 150 ms fades.
+- The header is sticky from 900 px wide. Below that the navigation wraps onto several rows, so the header scrolls away with the page.
 
 ## External services the page loads
-- **Google Fonts** (Archivo and JetBrains Mono). To avoid the third-party request (privacy and performance), self-host the font files.
-- Nothing else. No analytics, trackers or frameworks.
-
-## Performance notes
-- No JS framework; total page weight is small (roughly 100 KB before fonts). The car artwork is one shared inline SVG sprite.
-- Animations use only `transform`, `opacity` and CSS variables, and respect `prefers-reduced-motion`.
-- When real photos are added, lazy-load everything below the hero (`loading="lazy"`) and preload the hero image.
-
-## Accessibility notes
-Skip link, landmarks, one `h1`, labelled controls (configurator inputs are real radio buttons and checkboxes in fieldsets), inline error messages linked with `aria-describedby`, `aria-live` status messages, visible focus styles, 44 px touch targets and reduced-motion support.
-Before launch, also run an automated axe/Lighthouse audit and a quick screen-reader pass (VoiceOver/NVDA) against the final content.
+Google Fonts (Archivo). Nothing else.
 
 ## Local preview
 ```sh
